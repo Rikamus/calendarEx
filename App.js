@@ -248,18 +248,20 @@ export default class App extends Component{
         console.log('index: ' +index);
         if (index == true) {
           console.log('if del borrador '+ index);
-          delete(array[0].key)//array.splice(index, 1);
-          this.setState({items: array});
+          array = array.filter(function( obj ) {
+            return obj.field == key;
+        });//array.splice(index, 1);
+          this.setState({items: array},()=>console.log(this.state.items));
         }
         
         //delete(newItems[key]);
         //delete(newItems[key]);
         console.log('array despues del delete');
         //this.setSaste({variable:value},()=>console.log(variable))
-        console.log(array); //console.log(JSON.stringify(newItems));
+        () => console.log(array); //console.log(JSON.stringify(newItems));
         //this.setState({items: newItems},()=>console.log(this.state.items));
         console.log('items:');
-        console.log(this.state.items);
+        () => console.log(this.state.items);
         console.log('day');
         console.log(day);
         }
