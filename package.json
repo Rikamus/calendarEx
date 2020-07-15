@@ -1,0 +1,29 @@
+{
+  "name": "calendarEx",
+  "version": "0.0.1",
+  "private": true,
+  "scripts": {
+    "start": "react-native start",
+    "test": "jest"
+  },
+  "dependencies": {
+    "moment": "^2.27.0",
+    "native-base": "^2.13.12",
+    "react": "16.8.6",
+    "react-native": "0.60.0",
+    "react-native-calendars": "^1.269.0",
+    "react-native-display": "^1.0.8"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.3.3",
+    "@babel/runtime": "^7.3.1",
+    "@react-native-community/eslint-config": "^0.0.3",
+    "babel-jest": "^24.1.0",
+    "jest": "^24.1.0",
+    "metro-react-native-babel-preset": "^0.54.1",
+    "react-test-renderer": "16.8.6"
+  },
+  "jest": {
+    "preset": "react-native"
+  }
+}
