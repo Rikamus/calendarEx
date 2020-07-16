@@ -10,7 +10,7 @@ import {
   Modal,
   ScrollView,
 } from 'react-native';
-import { Item, Input, } from "native-base";
+import { Item, Input, Icon} from "native-base";
 import {Calendar, CalendarList, Agenda} from 'react-native-calendars';
 
 import moment from 'moment'
@@ -131,7 +131,7 @@ export default class App extends Component{
         "Modificar evento",
         "Que deseas hacer modificar o borrar un evento?",
         [
-          { text: "Modificar", onPress: () => {this.Borrar(_day, cancelado, _selectedDay), this.Agregar(day, _selectedDay);} },
+          { text: "Modificar", onPress: () => {this.Borrar(_day, _selectedDay), this.Agregar(day, _selectedDay);} },
           { text: "Borrar", onPress: () => this.Borrar(_day, cancelado, _selectedDay) },
           { text: "Cancelar", onPress: () => console.log("Cancel Pressed") }
         ]
@@ -228,44 +228,16 @@ export default class App extends Component{
     return date.toISOString().split('T')[0];
   }
 
-  Borrar = (day, cancelado, _selectedDay) => {
-    const newItems = {};
+  Borrar = (day, _selectedDay) => {
     console.log('********* datos despues de Borrar *********');
-    var array = [this.state.items]; 
-    Object.keys(this.state.items).forEach(key => {newItems[key] = this.state.items[key];
-      if (key == cancelado){
-        console.log('array antes del delete');
-        console.log(JSON.stringify(array));
-        //console.log(JSON.stringify(newItems));
-        //newItems.splice(key, 1);
-        //var array = [newItems]; // make a separate copy of the array
-        console.log(key);
-        console.log('array en posicion 0');
-        console.log(array[0]);       
-        var index = array[0].hasOwnProperty(key); //array.indexOf([0]); //.indexOf();
-        //var index = array.indexOf(this.state.items[0].date);
-        
-        console.log('index: ' +index);
-        if (index == true) {
-          console.log('if del borrador '+ index);
-          array = array.filter(function( obj ) {
-            return obj.field == key;
-        });//array.splice(index, 1);
-          this.setState({items: array},()=>console.log(this.state.items));
-        }
-        
-        //delete(newItems[key]);
-        //delete(newItems[key]);
-        console.log('array despues del delete');
-        //this.setSaste({variable:value},()=>console.log(variable))
-        () => console.log(array); //console.log(JSON.stringify(newItems));
-        //this.setState({items: newItems},()=>console.log(this.state.items));
-        console.log('items:');
-        () => console.log(this.state.items);
-        console.log('day');
-        console.log(day);
-        }
-      });
+    //** LO DE DANY
+    var t = this.state.items;
+    if(t.hasOwnProperty(String(day.dateString)))
+    {
+      delete t[String(day.dateString)];
+      this.setState({items:t});
+    }
+    //** AQUI TERMINA LO DE DANY */
     let selected = true;
     /*console.log(cancelado);
     var temp = this.state.items; 
@@ -281,7 +253,8 @@ export default class App extends Component{
     const updatedMarkedDates = {...this.state._markedDates, ...{ [_selectedDay]: { selected } } }
     this.setState({ _markedDates: updatedMarkedDates });
     console.log(this.state.items);
-    this.loadItems(day);
+    agendaRef.setScrollPadPosition(0, true);
+    //this.loadItems(day);
   }
 
   Agregar = (day, _selectedDay) => {
@@ -340,6 +313,7 @@ export default class App extends Component{
 
         <Text style={styles.text}>Agenda de eventos</Text>
              <Agenda
+             ref={ref => (agendaRef = ref)}
                 testID={testIDs.agenda.CONTAINER}
                 items={this.state.items}              
                 //loadItemsForMonth={this.loadItems.bind(this)}
@@ -359,6 +333,7 @@ export default class App extends Component{
                 onDayPress={this.onDaySelect}
                 //onDayPress={this.onDayPress}
                 markedDates={this.state._markedDates}
+                renderKnob={() => {return (<Text>Ver Calendario</Text>);}}
                 /*markedDates={{
                   [this.state.selected]: {
                     selected: true,
